@@ -27,6 +27,10 @@ const UserProfile = new Schema({
         type: String,
         default: ''
     },
+    city: {
+        type: String,
+        default: ''
+    },
     is_demographic_updated: {
         type: Boolean,
         default: false
@@ -62,7 +66,9 @@ UserProfile.methods.toJSON = function () {
         'date_of_birth',
         'country',
         'is_demographic_updated',
-        'profile_image'
+        'profile_image',
+        'user_prefer',
+        'city',
     ])
 };
 

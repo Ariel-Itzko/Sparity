@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-import { RENDER_BAD_REQUEST } from '../../util/utils.js';
-import { logoutUser } from '../../service/user/user_auth.service.js';
+import { logoutUser } from '../../../service/user/user_auth.service.js';
+import { RENDER_BAD_REQUEST } from '../../../util/utils.js';
 
 export const userLogoutCtrl = async (req, res) => {
 

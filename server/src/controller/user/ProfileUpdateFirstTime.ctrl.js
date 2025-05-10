@@ -1,15 +1,17 @@
 import _ from 'lodash';
 
-import { loginUser } from '../../service/user/user_auth.service.js';
+import { ProfileUpdateFirstTimeService } from '../../service/user/user_profile.service.js';
 import { CHECK_REQUIRED_PARAMS, RENDER_BAD_REQUEST } from '../../util/utils.js';
 
-export const userLoginCtrl = async (req, res) => {
+export const ProfileUpdateFirstTimeCtrl = async (req, res) => {
     try {
 
         const all_params = [
-            'email',
-            'password',
-            'remember_me'
+            'gender',
+            'date_of_birth',
+            'country',
+            'user_prefer',
+            'city',
         ];
         const body = _.pick(req.body, all_params);
 
@@ -20,20 +22,17 @@ export const userLoginCtrl = async (req, res) => {
             });
         }
 
-        const { error, auth, error_message, data } = await loginUser(
-            body.email,
-            body.password,
-            body.remember_me,
+        const { error, error_message, data } = await ProfileUpdateFirstTimeService(
+            req.user,
+            body.gender,
+            body.date_of_birth,
+            body.country,
+            body.user_prefer,
+            body.city,
         );
 
         if (error) {
             return res.status(400).json({
-                message: error_message
-            })
-        }
-
-        if (!auth) {
-            return res.status(403).json({
                 message: error_message
             })
         }

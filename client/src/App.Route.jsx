@@ -14,9 +14,9 @@ import useUserProfileStore from './store/userProfile.store';
 import useUserStore from './store/user.store';
 import useUserTokenStore from './store/userToken.store';
 import MainLayout from './components/layout/mainLayout/MainLayout';
+import FirstAuth from './components/common/FirstAuth';
 
 // LAYOUTS
-
 
 export default function AppRoute() {
     const { user } = useUserStore();
@@ -26,20 +26,25 @@ export default function AppRoute() {
     const isAuth = useMemo(() => Boolean(user && userToken && userProfile), [userProfile, userProfile, user]);
     const isFirstAuth = useMemo(() => Boolean(!userProfile?.is_demographic_updated), [userProfile]);
 
+
+    console.log(userProfile);
+    console.log(isFirstAuth);
     return (
         <Routes>
             <Route path='/' element={<MainLayout />}>
-                <Route index element={<h1>Hello</h1>} />
-            </Route>
+                <Route element={<FirstAuth isFirstAuth={isFirstAuth} isAuth={isAuth} />}>
 
-            <Route element={<PreAuthRoute isAuth={isAuth} />} >
+                    <Route index element={<h1>Hello</h1>} />
+
+                    <Route element={<ProtectedRoute isAuth={isAuth} />}>
+                        <Route path='/hello' element={<p>Hello world</p>} />
+                    </Route>
+                </Route>
+            </Route>
+            <Route element={<PreAuthRoute isAuth={isAuth} />}>
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
             </Route>
-
-            <Route element={<ProtectedRoute isAuth={isAuth} />}>
-                <Route path='/hello' element={<p>Hello wolrd</p>} />
-            </Route>
         </Routes>
-    )
+    );
 }

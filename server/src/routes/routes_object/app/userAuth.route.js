@@ -1,6 +1,6 @@
-import { userLoginCtrl } from "../../../controller/user/userLogin.ctrl.js";
-import { userLogoutCtrl } from "../../../controller/user/userLogout.ctrl.js";
-import { userRegisterCtrl } from "../../../controller/user/userRegister.ctrl.js";
+import { userLoginCtrl } from "../../../controller/user/auth/userLogin.ctrl.js";
+import { userLogoutCtrl } from "../../../controller/user/auth/userLogout.ctrl.js";
+import { userRegisterCtrl } from "../../../controller/user/auth/userRegister.ctrl.js";
 
 import register_route from "../../../util/reg_route.js";
 
