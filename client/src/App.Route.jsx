@@ -8,15 +8,18 @@ import ProtectedRoute from './components/routes/ProtectedRoute';
 // PAGES
 import Login from './pages/auth/login/Login';
 import Register from './pages/auth/register/Register';
+import Post from './pages/post/Post';
 
 // STORES
 import useUserProfileStore from './store/userProfile.store';
 import useUserStore from './store/user.store';
 import useUserTokenStore from './store/userToken.store';
-import MainLayout from './components/layout/mainLayout/MainLayout';
-import FirstAuth from './components/common/FirstAuth';
 
 // LAYOUTS
+import MainLayout from './components/layout/mainLayout/MainLayout';
+import FirstAuth from './components/common/FirstAuth';
+import AddPost from './pages/add_post/AddPost';
+import MyPost from './pages/my_post/MyPost';
 
 export default function AppRoute() {
     const { user } = useUserStore();
@@ -27,8 +30,6 @@ export default function AppRoute() {
     const isFirstAuth = useMemo(() => Boolean(!userProfile?.is_demographic_updated), [userProfile]);
 
 
-    console.log(userProfile);
-    console.log(isFirstAuth);
     return (
         <Routes>
             <Route path='/' element={<MainLayout />}>
@@ -38,6 +39,9 @@ export default function AppRoute() {
 
                     <Route element={<ProtectedRoute isAuth={isAuth} />}>
                         <Route path='/hello' element={<p>Hello world</p>} />
+                        <Route path='/post' element={<Post />} />
+                        <Route path='/post/new' element={<AddPost />} />
+                        <Route path='/post/my-post' element={<MyPost />} />
                     </Route>
                 </Route>
             </Route>

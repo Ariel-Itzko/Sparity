@@ -6,6 +6,7 @@ import {
     updateUserPost,
     deleteUserPost
 } from '../../dal/user/user_post.dal.js';
+import { getUserProfileByUserId } from '../../dal/user/user_profile.dal.js';
 
 export const createNewPostService = async (user, post_text, post_heading, required_skills) => {
     let resp = {
@@ -13,9 +14,10 @@ export const createNewPostService = async (user, post_text, post_heading, requir
         error_message: '',
         data: {}
     };
+    let UserProfileData = await getUserProfileByUserId(user._id)
 
     const postObject = {
-        user_id: user._id,
+        user_id: UserProfileData._id,
         post_text,
         post_heading,
         required_skills
@@ -71,7 +73,8 @@ export const getPostsByUserIdService = async (userId) => {
         data: {}
     };
 
-    const data = await getUserPostsByUserId(userId);
+    const UserProfileData = await getUserProfileByUserId(userId);
+    const data = await getUserPostsByUserId(UserProfileData._id);
     resp.data = data || [];
     return resp;
 };

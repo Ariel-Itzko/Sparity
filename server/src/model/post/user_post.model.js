@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose';
 const UserPostSchema = new Schema({
     user_id: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'UserProfile',
         required: true
     },
     post_text: {
@@ -25,9 +25,9 @@ const UserPostSchema = new Schema({
         ],
         validate: {
             validator: function (val) {
-                return val.length >= 2;
+                return val.length >= 1;
             },
-            message: "Please add at least 2 skills"
+            message: "Please add at least 1 skill"
         }
     },
 }, { timestamps: true });

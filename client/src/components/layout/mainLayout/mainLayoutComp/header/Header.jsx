@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {
     Menu as MenuIcon,
@@ -46,7 +46,7 @@ export default function Header() {
     }
 
     return (
-        <div className={`navbar bg-base-100 shadow-sm transition-all duration-150 sticky top-0 ${scrollToggle ? 'py-4' : 'py-6'}`}>
+        <div className={`navbar bg-base-100 shadow-sm transition-all duration-150 sticky top-0 z-50 ${scrollToggle ? 'py-4' : 'py-6'}`}>
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -56,6 +56,16 @@ export default function Header() {
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-white rounded-lg z-10 mt-3 w-56 p-4 shadow-lg space-y-3"
                     >
+                        <li>
+                            <Link to={'/post/new'}>
+                                New Post
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to={'/post/my-post'}>
+                                My Posts
+                            </Link>
+                        </li>
                         {!isAuth ?
                             <>
                                 <li>
@@ -70,7 +80,7 @@ export default function Header() {
                                 </li>
                             </> :
                             <li>
-                                <SBtn1 label='Logut' color='btn-error' onClick={HandleLogout} />
+                                <SBtn1 label='Logout' color='btn-error' onClick={HandleLogout} />
                             </li>
                         }
                     </ul>
@@ -78,9 +88,12 @@ export default function Header() {
                 </div>
             </div>
             <div className="navbar-center">
-                <a className="btn btn-ghost text-xl">Sparity</a>
+                <Link to={'/'} className='text-xl'>Sparity</Link>
             </div>
             <div className="navbar-end">
+                <button className='btn btn-ghost link link-hover link-primary'>
+                    <Link to={'/post'}>Posts</Link>
+                </button>
                 <button className="btn btn-ghost btn-circle">
                     <SeacrhIcon />
                 </button>

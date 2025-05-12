@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-import { ProfileUpdateFirstTimeService } from '../../service/user/user_profile.service.js';
-import { CHECK_REQUIRED_PARAMS, RENDER_BAD_REQUEST } from '../../util/utils.js';
+import { ProfileUpdateFirstTimeService } from '../../../service/user/user_profile.service.js';
+import { CHECK_REQUIRED_PARAMS, RENDER_BAD_REQUEST } from '../../../util/utils.js';
 
 export const ProfileUpdateFirstTimeCtrl = async (req, res) => {
     try {

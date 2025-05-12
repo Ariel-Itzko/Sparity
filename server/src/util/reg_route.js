@@ -38,7 +38,7 @@ const register_route = (
             router.post(...args, post_method);
 
         } else {
-            router.post(...args,)
+            router.post(...args, HTTP_WRONG_METHOD)
         }
     }
 

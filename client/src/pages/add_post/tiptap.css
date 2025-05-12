@@ -1,0 +1,12 @@
+.editor {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 150px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.tiptap {
+    border: none;
+    outline: none;
+}

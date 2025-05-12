@@ -1,4 +1,4 @@
-import { ProfileUpdateFirstTimeCtrl } from "../../../controller/user/ProfileUpdateFirstTime.ctrl.js"
+import { ProfileUpdateFirstTimeCtrl } from "../../../controller/user/profile/ProfileUpdateFirstTime.ctrl.js"
 import register_route from "../../../util/reg_route.js"
 
 const UserProfileRoute = (router) => {
