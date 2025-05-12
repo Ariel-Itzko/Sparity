@@ -5,7 +5,7 @@ import {
     getUserPostsByUserId,
     updateUserPost,
     deleteUserPost
-} from '../../dal/user/user_post.dal.js';
+} from '../../dal/post/user_post.dal.js';
 import { getUserProfileByUserId } from '../../dal/user/user_profile.dal.js';
 
 export const createNewPostService = async (user, post_text, post_heading, required_skills) => {
