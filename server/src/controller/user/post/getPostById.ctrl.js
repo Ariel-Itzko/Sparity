@@ -5,7 +5,6 @@ import { RENDER_BAD_REQUEST } from "../../../util/utils.js";
 const getPostByIdCtrl = async (req, res) => {
     try {
         const { postId } = req.params;
-
         const { error, error_message, data } = await getPostByIdService(postId);
         if (error) {
             return res.status(400).json({

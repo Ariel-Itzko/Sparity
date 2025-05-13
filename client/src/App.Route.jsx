@@ -20,6 +20,7 @@ import MainLayout from './components/layout/mainLayout/MainLayout';
 import FirstAuth from './components/common/FirstAuth';
 import AddPost from './pages/add_post/AddPost';
 import MyPost from './pages/my_post/MyPost';
+import MyPostDeatail from './pages/myPostDeatail/MyPostDeatail';
 
 export default function AppRoute() {
     const { user } = useUserStore();
@@ -42,6 +43,7 @@ export default function AppRoute() {
                         <Route path='/post' element={<Post />} />
                         <Route path='/post/new' element={<AddPost />} />
                         <Route path='/post/my-post' element={<MyPost />} />
+                        <Route path='/post/my-post/:post_id' element={<MyPostDeatail />} />
                     </Route>
                 </Route>
             </Route>

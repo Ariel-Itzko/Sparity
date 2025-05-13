@@ -1,5 +1,14 @@
+import { toast } from "sonner"
+
+import { addUserRespAPi } from "../../../util/apis/post_resp_api/addUserResp.api.js"
+
 export default function PostCard({ post }) {
-    console.log(post);
+    const handleAddResp = async (post_id) => {
+        let resp = await addUserRespAPi(post_id)
+        if (resp) {
+            toast.success('A request message has been sent')
+        }
+    }
     return (
         <div className='shadow-lg p-3'>
             <div className='flex items-center h-14'>
@@ -33,7 +42,9 @@ export default function PostCard({ post }) {
             <div className="mt-auto flex justify-between items-end pt-4 px-4">
                 <div className="flex gap-3">
                     <button className="btn btn-sm btn-primary">Check in Details</button>
-                    <button className="btn btn-sm btn-secondary">Apply Now</button>
+                    <button className="btn btn-sm btn-secondary" onClick={() => {
+                        handleAddResp(post._id)
+                    }}>Apply Now</button>
                 </div>
             </div>
         </div>

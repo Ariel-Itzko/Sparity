@@ -69,6 +69,7 @@ UserProfile.methods.toJSON = function () {
         'profile_image',
         'user_prefer',
         'city',
+        '_id'
     ])
 };
 

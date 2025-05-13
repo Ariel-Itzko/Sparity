@@ -18,7 +18,7 @@ const updateStatusPostRespCtrl = async (req, res) => {
                 message: 'request params missing => ' + missing_key
             });
         }
-        const { error, error_message, data } = await updateStatusPostService(req.user, update_user_id, body.post_id, body.status);
+        const { error, error_message, data } = await updateStatusPostService(req.user, body.update_user_id, body.post_id, body.status);
         if (error) {
             return res.status(400).json({
                 message: error_message,

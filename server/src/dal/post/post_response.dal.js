@@ -12,7 +12,7 @@ export const addNewUser_PostResp = async (post_id, user_id) => {
         respPost.resp_users.push({ user_id });
     }
 
-    await respPost.save();
+    return await respPost.save();
 };
 
 export const getUserResp_PostResp = async (post_id, user_id) => {
@@ -72,3 +72,10 @@ export const getAllUserPostResponses = async (user_id) => {
         }
     ]);
 };
+
+export const findRespByUserID = async (post_id, user_id) => {
+    return await PostResponseModel.findOne({
+        post_id,
+        "resp_users.user_id": user_id
+    })
+}

@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 export default function MyPostCard({ post }) {
+    const navigate = useNavigate()
     return (
         <div className="border border-gray-200 rounded-xl shadow-md p-6 bg-white flex flex-col h-full">
             <div className="flex items-center justify-between">
@@ -26,6 +29,9 @@ export default function MyPostCard({ post }) {
                 <div className="flex gap-3">
                     <button className="btn btn-xs btn-primary">Edit</button>
                     <button className="btn btn-xs btn-error">Delete</button>
+                    <button onClick={() => {
+                        navigate(`/post/my-post/${post._id}`)
+                    }} className="btn btn-xs btn-secondary">Interactions</button>
                 </div>
                 <p className="text-sm text-gray-500">
                     {new Date(post.createdAt).toLocaleString()}

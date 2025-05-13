@@ -1,4 +1,4 @@
-import { addNewUser_PostResp, getallResp_PostResp, getAllUserPostResponses, updateResp_PostResp } from "../../dal/post/post_response.dal.js";
+import { addNewUser_PostResp, findRespByUserID, getallResp_PostResp, getAllUserPostResponses, updateResp_PostResp } from "../../dal/post/post_response.dal.js";
 import { getUserPostById } from "../../dal/post/user_post.dal.js";
 import { getUserProfileByUserId } from "../../dal/user/user_profile.dal.js";
 
@@ -8,16 +8,25 @@ export const addUserInRespPostService = async (user, post_id) => {
         error_message: '',
         data: {}
     };
-    const UserProfile = await getUserProfileByUserId(user._id)
+    const UserProfile = await getUserProfileByUserId(user._id);
+
+    const userResp = await findRespByUserID(post_id, UserProfile._id);
+    if (userResp) {
+        resp.error = true;
+        resp.error_message = 'Alerady Response added';
+        return resp;
+    }
 
     const data = await addNewUser_PostResp(post_id, UserProfile._id);
     if (!data) {
         resp.error = true;
-        resp.error_message = 'No data found';
+        resp.error_message = 'Failed to add resposne';
         return resp;
     }
 
-    resp.data = data;
+    resp.data = {
+        response_added: true
+    };
     return resp;
 };
 
@@ -54,8 +63,8 @@ export const updateStatusPostService = async (user, update_user_id, post_id, sta
         resp.error_message = 'Unauthorized query on resp_post';
         return resp;
     }
-
     const data = await updateResp_PostResp(post_id, update_user_id, status);
+    console.log(data);
     if (!data) {
         resp.error = true;
         resp.error_message = 'No data found';
