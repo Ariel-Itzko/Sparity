@@ -21,7 +21,7 @@ import Post from './pages/post/Post';
 import AddPost from './pages/add_post/AddPost';
 import MyPost from './pages/my_post/MyPost';
 import MyPostDeatail from './pages/myPostDeatail/MyPostDeatail';
-import Room from './pages/room/room';
+import Room from './pages/room/Room';
 
 export default function AppRoute() {
     const { user } = useUserStore();
