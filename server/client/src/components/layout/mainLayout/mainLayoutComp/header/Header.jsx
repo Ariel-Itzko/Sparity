@@ -94,6 +94,9 @@ export default function Header() {
                 <button className='btn btn-ghost link link-hover link-primary'>
                     <Link to={'/post'}>Posts</Link>
                 </button>
+                <Link className='' to={'/room'}>
+                    <button className='btn btn-ghost link link-hover link-primary'>Room</button>
+                </Link>
                 <button className="btn btn-ghost btn-circle">
                     <SeacrhIcon />
                 </button>

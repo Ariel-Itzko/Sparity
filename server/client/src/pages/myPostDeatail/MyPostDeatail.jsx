@@ -18,7 +18,7 @@ export default function MyPostDetail() {
             setPost(data);
 
             const resp = await getPostReviewApi(data._id);
-            setPostResp(resp.resp_users);
+            setPostResp(resp?.resp_users);
             setLoading(false);
         };
         init();

@@ -19,7 +19,6 @@ export const RegisterApi = async (data) => {
             data
         });
 
-        console.log(response);
 
         setUser(response.data.user);
         setUserToken(response.data.auth_token);

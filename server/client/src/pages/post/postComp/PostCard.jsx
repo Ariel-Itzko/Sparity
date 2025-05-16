@@ -2,7 +2,17 @@ import { toast } from "sonner"
 
 import { addUserRespAPi } from "../../../util/apis/post_resp_api/addUserResp.api.js"
 
+import useUserProfileStore from "../../../store/userProfile.store.js";
+import { useState } from "react";
+import { useEffect } from "react";
+
 export default function PostCard({ post }) {
+    const { userProfile } = useUserProfileStore();
+    const [loggedUser, setLoggedUser] = useState(false)
+
+    useEffect(() => {
+        setLoggedUser((Boolean(userProfile._id == post.user_id._id)));
+    }, [])
     const handleAddResp = async (post_id) => {
         let resp = await addUserRespAPi(post_id)
         if (resp) {
@@ -40,12 +50,17 @@ export default function PostCard({ post }) {
                 dangerouslySetInnerHTML={{ __html: post.post_text }}
             />
             <div className="mt-auto flex justify-between items-end pt-4 px-4">
-                <div className="flex gap-3">
+                {!loggedUser ? <div className="flex gap-3">
                     <button className="btn btn-sm btn-primary">Check in Details</button>
                     <button className="btn btn-sm btn-secondary" onClick={() => {
                         handleAddResp(post._id)
                     }}>Apply Now</button>
                 </div>
+                    :
+                    <div className="bg-gray-300 px-3">
+                        <p className="italic">Your Post</p>
+                    </div>
+                }
             </div>
         </div>
     )

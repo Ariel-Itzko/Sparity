@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
+
 import { getUserWithToken } from '../service/user/user_auth.service.js';
+import { getUserProfileService } from '../service/user/user_profile.service.js';
 
 const user_auth_middleware = async (req, res, next) => {
     try {
@@ -23,11 +25,13 @@ const user_auth_middleware = async (req, res, next) => {
 
 
                 const { auth_failed, user } = await getUserWithToken(token, member_id);
+                const { error, data } = await getUserProfileService(user._id)
 
-                if (auth_failed) {
+                if (auth_failed, error) {
                     return res.status(401).send();
                 } else {
                     req.user = user;
+                    req.userProfile = data;
                     next();
                 }
             }

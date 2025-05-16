@@ -1,14 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { gatAllPostsApi } from '../../util/apis/user_post/getAllPosts.api'
-import { useState } from 'react'
+
 import PostCard from './postComp/PostCard';
+import { getUserRoom } from '../../util/apis/room_api/getUserRoom.api';
+
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
     useEffect(() => {
         const init = async () => {
             let data = await gatAllPostsApi();
-            setPosts(data)
+            setPosts(data);
+                      
         }
         init()
     }, []);

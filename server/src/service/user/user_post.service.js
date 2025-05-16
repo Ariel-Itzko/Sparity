@@ -6,9 +6,11 @@ import {
     updateUserPost,
     deleteUserPost
 } from '../../dal/post/user_post.dal.js';
+import { createChatRoom } from '../../dal/room/room_chat.dal.js';
+import { createRoom } from '../../dal/room/room_member.dal.js';
 import { getUserProfileByUserId } from '../../dal/user/user_profile.dal.js';
 
-export const createNewPostService = async (user, post_text, post_heading, required_skills) => {
+export const createNewPostService = async (user, post_text, post_heading, required_skills, auth_user_profile) => {
     let resp = {
         error: false,
         error_message: '',
@@ -24,14 +26,18 @@ export const createNewPostService = async (user, post_text, post_heading, requir
     };
 
     const data = await createUserPost(postObject);
-    if (!data) {
+    const room = await createRoom(data._id, UserProfileData._id);
+    const room_chat = await createChatRoom(room._id);
+
+    if (!data || !room || !room_chat) {
         resp.error = true;
         resp.error_message = 'upload_post: false';
         return resp;
     }
 
     resp.data = {
-        upload_post: true
+        upload_post: true,
+        room_creation: true
     };
     return resp;
 };

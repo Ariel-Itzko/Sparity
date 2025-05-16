@@ -23,7 +23,7 @@ const createPostCtrl = async (req, res) => {
             req.user,
             body.post_text,
             body.post_heading,
-            body.required_skills
+            body.required_skills,
         );
         if (error) {
             return res.status(400).json({

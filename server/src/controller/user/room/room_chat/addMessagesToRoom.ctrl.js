@@ -1,12 +1,13 @@
-import _ from 'lodash'
+import _ from "lodash";
+import { addMessageToRoomService } from "../../../../service/user/room/room_chat.service.js";
 
-import { addUserInRespPostService } from "../../../../service/user/post_resp.service.js";
-import { CHECK_REQUIRED_PARAMS, RENDER_BAD_REQUEST } from '../../../../util/utils.js'
+import { CHECK_REQUIRED_PARAMS, RENDER_BAD_REQUEST } from "../../../../util/utils.js";
 
-const addUserRespPostCtrl = async (req, res) => {
+const addMessagesToRoom = async (req, res) => {
     try {
         const all_params = [
-            'post_id'
+            'room_id',
+            'message',
         ];
         const body = _.pick(req.body, all_params);
 
@@ -16,7 +17,14 @@ const addUserRespPostCtrl = async (req, res) => {
                 message: 'request params missing => ' + missing_key
             });
         }
-        const { error, error_message, data } = await addUserInRespPostService(req.user, body.post_id , req.userProfile);
+        
+        const { error, error_message, data } = await addMessageToRoomService(
+            body.room_id,
+            req.userProfile._id,
+            body.message
+        );
+
+      
         if (error) {
             return res.status(400).json({
                 message: error_message,
@@ -28,4 +36,4 @@ const addUserRespPostCtrl = async (req, res) => {
     }
 };
 
-export default addUserRespPostCtrl;
+export default addMessagesToRoom

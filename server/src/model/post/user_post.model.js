@@ -14,6 +14,11 @@ const UserPostSchema = new Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: String,
+        enu: ['open', 'in-progress', 'completed', 'closed'],
+        default: 'open'
+    },
     required_skills: {
         type: [
             {
