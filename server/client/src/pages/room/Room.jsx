@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getUserRoom } from '../../util/apis/room_api/getUserRoom.api';
 import { Link, useParams } from 'react-router-dom';
 import DrawerCard from './roomComp/DrawerCard';
-import RoomBody from './roomComp/roomBody';
+import RoomBody from './roomComp/RoomBody';
 import { Menu } from 'lucide-react';
 
 export default function Room() {
