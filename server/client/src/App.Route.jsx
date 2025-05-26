@@ -17,45 +17,47 @@ import MainLayout from './components/layout/mainLayout/MainLayout';
 import Login from './pages/auth/login/Login';
 import Register from './pages/auth/register/Register';
 import FirstAuth from './components/common/FirstAuth';
-import Post from './pages/post/Post';
-import AddPost from './pages/add_post/AddPost';
-import MyPost from './pages/my_post/MyPost';
-import MyPostDeatail from './pages/myPostDeatail/MyPostDeatail';
-import Room from './pages/room/Room';
+import LandingPage from './pages/Landing/LandingPage';
+import Test from './pages/test/Test';
+import useUserRoleStore from './store/userRole.store';
 
 export default function AppRoute() {
     const { user } = useUserStore();
     const { userProfile } = useUserProfileStore();
     const { userToken } = useUserTokenStore();
+    const { userRole } = useUserRoleStore();
 
     const isAuth = useMemo(() => Boolean(user && userToken && userProfile), [userProfile, userProfile, user]);
     const isFirstAuth = useMemo(() => Boolean(!userProfile?.is_demographic_updated), [userProfile]);
-
+    const isCreator = useMemo(() => Boolean(userRole === 'Creator'), [userProfile]);
 
     return (
         <Routes>
-            <Route path='/' element={<MainLayout />}>
-                <Route element={<FirstAuth isFirstAuth={isFirstAuth} isAuth={isAuth} />}>
+            {isCreator ?
+                <Route path='/' element={<h1>this is creator pages</h1>} />
+                :
+                <>
+                    <Route path='/' element={<MainLayout />}>
+                        <Route element={<FirstAuth isFirstAuth={isFirstAuth} isAuth={isAuth} />}>
 
-                    <Route index element={<h1>Hello</h1>} />
+                            <Route index element={<LandingPage />} />
 
-                    <Route element={<ProtectedRoute isAuth={isAuth} />}>
-                        <Route path='/hello' element={<p>Hello world</p>} />
-                        <Route path='/post' element={<Post />} />
-                        <Route path='/post/new' element={<AddPost />} />
-                        <Route path='/post/my-post' element={<MyPost />} />
-                        <Route path='/post/my-post/:post_id' element={<MyPostDeatail />} />
+                            <Route element={<ProtectedRoute isAuth={isAuth} />}>
+                                <Route path='/hello' element={<p>Hello world</p>} />
 
+                            </Route>
+                        </Route>
                     </Route>
-                </Route>
-            </Route>
-            <Route element={<ProtectedRoute isAuth={isAuth} />}>
-                <Route path='/room/:room_id?' element={<Room />} />
-            </Route>
+                    <Route element={<ProtectedRoute isAuth={isAuth} />}>
+                        {/* <Route path='/room/:room_id?' element={<Room />} /> */}
+                    </Route>
+                </>
+            }
             <Route element={<PreAuthRoute isAuth={isAuth} />}>
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
             </Route>
+            <Route path='test' element={<Test />} />
         </Routes>
     );
 }

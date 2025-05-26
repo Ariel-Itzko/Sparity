@@ -23,12 +23,13 @@ export const updateUserProfile = async (user_id, updateData) => {
     );
 };
 
-export const createEmptyProfile = async (user_id, first_name, last_name) => {
+export const createEmptyProfile = async (user_id, first_name, last_name, user_name) => {
     const profile = new UserProfileModel();
     profile.user_id = user_id;
 
     first_name ? profile.first_name = first_name : false;
     last_name ? profile.last_name = last_name : false;
+    user_name ? profile.user_name = user_name : false;
 
     await profile.save();
     return profile;

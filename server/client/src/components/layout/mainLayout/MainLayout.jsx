@@ -6,7 +6,7 @@ export default function MainLayout() {
     return (
         <>
             <Header />
-            <div className='p-6 min-h-screen'>
+            <div className='min-h-screen'>
                 <Outlet />
             </div>
             <Footer />

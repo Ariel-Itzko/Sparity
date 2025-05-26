@@ -84,9 +84,8 @@ export const registerUser = async (email, first_name, last_name, unmask_password
 
     const user = await createUser(userObj);
 
-    let profile = await createEmptyProfile(user._id, first_name, last_name);
-
-
+    // using the member id as the user name 
+    let profile = await createEmptyProfile(user._id, first_name, last_name, member_id);
 
     const payload = {
         member_id,

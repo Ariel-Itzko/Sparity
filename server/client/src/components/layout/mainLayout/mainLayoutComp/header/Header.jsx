@@ -11,6 +11,7 @@ import { LogoutApi } from '../../../../../util/apis/auth_api/userLogout.api';
 import useUserRoleStore from '../../../../../store/userRole.store';
 import useUserStore from '../../../../../store/user.store';
 import Search from './headerComp/Search';
+import SBtn1 from '../../../../common/SBtn1';
 
 export default function Header() {
     const { user } = useUserStore();
@@ -20,15 +21,27 @@ export default function Header() {
 
     const [scrollToggle, setScrollToggle] = useState(false);
     const [menuToggle, setMenuToggle] = useState(false);
+    const [isAuth, setIsAuth] = useState(Boolean(user));
 
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            setScrollToggle(scrollPosition >= 30);
+
+            setScrollToggle(prev => {
+                if (!prev && scrollPosition >= 50) {
+                    return true;
+                }
+                if (prev && scrollPosition <= 20) {
+                    return false;
+                }
+                return prev;
+            });
         };
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
 
     useEffect(() => {
         document.body.style.overflow = menuToggle ? 'hidden' : 'auto';
@@ -65,9 +78,7 @@ export default function Header() {
                 </div>
                 <ul className="flex flex-col items-start px-6 py-4 space-y-4">
                     <li>
-                        <button onClick={HandleSwitchUser} className="btn btn-ghost text-sm">
-                            Switch to Creator
-                        </button>
+                        <SBtn1 label='Switch to Creator' onClick={HandleSwitchUser} />
                     </li>
                     <li>
                         <Link to="/profile" onClick={HandleMenuToggler}>Profile</Link>
@@ -88,61 +99,63 @@ export default function Header() {
                 className={`px-9 navbar bg-base-100 flex flex-col shadow-sm transition-all duration-150 sticky top-0 z-10 ${scrollToggle ? 'py-4' : 'py-6'
                     }`}
             >
-                <div className="flex justify-between w-full gap-x-4">
-                    <div className="flex items-center sm:hidden cursor-pointer z-50">
-                        <MenuIcon onClick={HandleMenuToggler} />
-                    </div>
-
-                    <Link to="/" className="flex items-center">
-                        <Logo />
-                    </Link>
-
-                    <div className="md:flex items-center w-96 hidden">
-                        <Search />
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <div>
-                            <BellIcon className="w-10 cursor-pointer" />
-                        </div>
-                        <div className="hidden md:block">
-                            <button
-                                onClick={HandleSwitchUser}
-                                className="btn btn-ghost text-sm text-purple-500"
-                            >
-                                Switch to Creator
-                            </button>
-                        </div>
-
-                        <div className="dropdown dropdown-end">
-                            <div
-                                tabIndex={0}
-                                role="button"
-                                className="btn btn-ghost btn-circle avatar"
-                            >
-                                <div className="w-10 rounded-full">
-                                    <img src="/logo-icon.png" alt="userProfileImage" />
-                                </div>
+                {
+                    isAuth ?
+                        <div className="flex justify-between w-full gap-x-4">
+                            <div className="flex items-center sm:hidden cursor-pointer z-50">
+                                <MenuIcon onClick={HandleMenuToggler} />
                             </div>
 
-                            <ul
-                                tabIndex={0}
-                                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 w-52"
-                            >
-                                <li>
-                                    <Link to="/profile">Profile</Link>
-                                </li>
-                                <li>
-                                    <Link to="/dashboard">Dashboard</Link>
-                                </li>
-                                <hr className="my-3 px-[5px]" />
-                                <li>
-                                    <Link to="/settings">Settings</Link>
-                                </li>
-                            </ul>
+                            <Link to="/" className="flex items-center">
+                                <Logo />
+                            </Link>
+
+                            <div className="md:flex items-center w-96 hidden">
+                                <Search />
+                            </div>
+
+                            <div className="flex items-center gap-3">
+                                <div>
+                                    <BellIcon className="w-10 cursor-pointer" />
+                                </div>
+                                <div className="hidden md:block">
+                                    <SBtn1 label='Switch to Creator' onClick={HandleSwitchUser} />
+                                </div>
+
+                                <div className="dropdown dropdown-end">
+                                    <div
+                                        tabIndex={0}
+                                        role="button"
+                                        className="btn btn-ghost btn-circle avatar"
+                                    >
+                                        <div className="w-10 rounded-full">
+                                            <img src="/logo-icon.png" alt="userProfileImage" />
+                                        </div>
+                                    </div>
+
+                                    <ul
+                                        tabIndex={0}
+                                        className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 w-52"
+                                    >
+                                        <li>
+                                            <Link to="/profile">Profile</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/dashboard">Dashboard</Link>
+                                        </li>
+                                        <hr className="my-3 px-[5px]" />
+                                        <li>
+                                            <Link to="/settings">Settings</Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        :
+                        <div>
+                            <button className='btn btn-primary'>Login</button>
+                        </div>
+                }
 
                 <div className="hidden sm:flex md:hidden items-center w-full mt-3">
                     <Search />

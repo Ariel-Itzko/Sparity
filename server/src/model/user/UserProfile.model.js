@@ -2,11 +2,14 @@ import { Schema, model } from "mongoose";
 import _ from 'lodash';
 
 const UserProfile = new Schema({
+    // Auto
     user_id: {
         type: Schema.Types.ObjectId,
         require: true,
+        ref: 'User',
         unique: true
     },
+    // First Auth and register
     first_name: {
         type: String,
         required: true,
@@ -14,6 +17,15 @@ const UserProfile = new Schema({
     last_name: {
         type: String,
         required: true,
+    },
+    user_name: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    is_user_name_set: {
+        type: Boolean,
+        default: false,
     },
     gender: {
         type: String,
@@ -43,36 +55,21 @@ const UserProfile = new Schema({
         type: Boolean,
         default: false
     },
-    profile_image: {
-        type: String,
-        default: ''
-    },
     user_prefer: {
         type: String,
-        enum: ['creator', 'collaborator'],
-        default: 'collaborator'
+        enum: ['creator', 'advertiser', 'both'],
+        default: 'advertiser'
+    },
+    // default 
+    profile_image: {
+        type: String,
+        default: 'https://res.cloudinary.com/dqdrqdxt2/image/upload/v1747059503/htlhuod5nmv8qvk6twzh.jpg'
+    },
+    is_deleted: {
+        type: Boolean,
+        default: false,
     }
 }, { timestamps: true });
-
-
-UserProfile.methods.toJSON = function () {
-    const userProfileSchema = this;
-    const userProfileObject = userProfileSchema.toObject();
-    return _.pick(userProfileObject, [
-        'first_name',
-        'last_name',
-        'user_id',
-        'gender',
-        'date_of_birth',
-        'country',
-        'is_demographic_updated',
-        'profile_image',
-        'user_prefer',
-        'city',
-        '_id'
-    ])
-};
-
 
 
 const UserProfileModel = model('UserProfile', UserProfile);
