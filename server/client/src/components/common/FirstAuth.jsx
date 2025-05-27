@@ -4,11 +4,12 @@ import { Outlet } from 'react-router-dom';
 import { firstTImeAuthApi } from '../../util/apis/profile_api/user_firstauth.api';
 import useUserProfileStore from '../../store/userProfile.store';
 import UserNameSet from './firstAuthComp/UserNameSet';
+import DemoData from './firstAuthComp/DemoData';
 
 export default function FirstAuth({ isFirstAuth, isAuth }) {
     const { userProfile } = useUserProfileStore();
 
-    const IsUserNameSet = useMemo(() => Boolean(userProfile.is_user_name_set), [userProfile])
+    const IsUserNameSet = useMemo(() => Boolean(userProfile?.is_user_name_set), [userProfile])
 
     console.log(IsUserNameSet);
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
@@ -37,7 +38,7 @@ export default function FirstAuth({ isFirstAuth, isAuth }) {
                 <div className='bg-base-100 w-full p-10 h-screen absolute overflow-y-auto'>
                     {
                         IsUserNameSet ?
-                            <></>
+                            <DemoData />
                             :
                             <UserNameSet />
                     }

@@ -27,6 +27,7 @@ const UserProfile = new Schema({
         type: Boolean,
         default: false,
     },
+    // demographic 
     gender: {
         type: String,
         default: ''

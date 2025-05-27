@@ -1,18 +1,43 @@
 import { useState } from "react";
+import { UserNameSetUpApi } from "../../../util/apis/profile_api/username_setup.api";
 
 export default function UserNameSet() {
     const [username, setUsername] = useState("");
-    const [error, setError] = useState('')
+    const [error, setError] = useState("");
+    const [loading, setLoaing] = useState(false);
+
+    const validateUsername = (name) => {
+        const validPattern = /^[a-zA-Z0-9_-]+$/;
+
+        if (!name) {
+            return "Please enter a valid username.";
+        }
+        if (name.length < 3) {
+            return "Username must be at least 3 characters.";
+        }
+        if (!validPattern.test(name)) {
+            return "Username can only contain letters, numbers, underscores, and hyphens (no spaces or special characters).";
+        }
+
+        return "";
+    };
 
     const handleUsernameSubmit = async () => {
-        if (!username) {
-            setError('Please Enter Valid UserName');
-            return
+        const validationError = validateUsername(username);
+        if (validationError) {
+            setError(validationError);
+            return;
         }
-        try {
-            console.log(username);
-        } catch (error) {
 
+        setError("");
+        try {
+            setLoaing(true)
+            const resp = await UserNameSetUpApi({ username });
+            console.log(resp);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoaing(false)
         }
     };
 
@@ -46,14 +71,18 @@ export default function UserNameSet() {
                         <input
                             id="username"
                             type="text"
-                            className="input input-bordered w-full focus:outline-none"
+                            className={`input input-bordered w-full focus:outline-none ${error && 'input-error'}`}
                             placeholder="Jhon-Deep"
                             value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            onChange={(e) => setUsername(e.target.value.trimStart())} // trim start while typing
                         />
-                        <div className="text-end">
-                            <p className="text-error text-xs">{error && error}</p>
-                        </div>
+                        {error && (
+                            <p className="text-error text-xs mt-1 text-end">{error}</p>
+                        )}
+                        {
+                            loading &&
+                            <p className="loading loading-spinner loading-xs"></p>
+                        }
                     </div>
 
                     <div className="w-full">

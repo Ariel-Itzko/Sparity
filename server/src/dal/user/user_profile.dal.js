@@ -34,3 +34,7 @@ export const createEmptyProfile = async (user_id, first_name, last_name, user_na
     await profile.save();
     return profile;
 };
+
+export const getUserProfileByUsername = async (user_name) => {
+    return UserProfileModel.findOne({ user_name })
+}

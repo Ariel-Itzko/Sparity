@@ -8,9 +8,4 @@ UserAuhtRoute(router);
 
 userProfileRoute(router);
 
-
-
-
-
-
 export default router;
